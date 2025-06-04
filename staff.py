@@ -12,7 +12,7 @@ def modo_staff(sistema, ARQUIVO_JSON, usuario_logado):
 
     with st.sidebar:
         st.success(f"Logado como: {usuario_logado} (staff)")
-        st.markdown("## \ud83d\udccb Menu do Staff")
+        st.write("## 📋 Menu do Staff")
 
         opcoes_staff = {
             "Escolher confronto": lambda: escolher_confronto(sistema, ARQUIVO_JSON, usuario_logado),
