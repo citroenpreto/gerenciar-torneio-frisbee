@@ -1,42 +1,39 @@
 import streamlit as st
-from util import salvar_sistema
 import time
-import streamlit as st
 from util import salvar_sistema
-
 
 def modo_staff(sistema, ARQUIVO_JSON, usuario_logado):
     torneio = sistema.get("torneio_ativo")
-    confronto_atual = sistema.get("confronto_ativo")
 
-    # === SIDEBAR FIXO ===
+    if "staffs_confrontos" not in sistema:
+        sistema["staffs_confrontos"] = {}
+
+    confronto_atual = sistema["staffs_confrontos"].get(usuario_logado)
+
     with st.sidebar:
         st.success(f"Logado como: {usuario_logado} (staff)")
-        st.markdown("## 📋 Menu do Staff")
+        st.markdown("## \ud83d\udccb Menu do Staff")
 
         opcoes_staff = {
-            "Escolher confronto": lambda s: escolher_confronto(s),
-            "Ver jogadores dos times": lambda s: verificar_times_jogadores(s),
-            "Definir sequência (M/F)": lambda s: definir_sequencia(s, ARQUIVO_JSON),
-            "Registrar ponto": lambda s: registrar_ponto(s, ARQUIVO_JSON),
-            "Remover ponto": lambda s: remover_ponto(s, ARQUIVO_JSON),
-            "Iniciar tempo": lambda s: iniciar_tempo(s, ARQUIVO_JSON),
-            "Finalizar confronto": lambda s: finalizar_confronto(s, ARQUIVO_JSON)
+            "Escolher confronto": lambda: escolher_confronto(sistema, ARQUIVO_JSON, usuario_logado),
+            "Ver jogadores dos times": lambda: verificar_times_jogadores(sistema, usuario_logado),
+            "Definir sequ\u00eancia (M/F)": lambda: definir_sequencia(sistema, ARQUIVO_JSON, usuario_logado),
+            "Registrar ponto": lambda: registrar_ponto(sistema, ARQUIVO_JSON, usuario_logado),
+            "Remover ponto": lambda: remover_ponto(sistema, ARQUIVO_JSON, usuario_logado),
+            "Iniciar tempo": lambda: iniciar_tempo(sistema, ARQUIVO_JSON, usuario_logado),
+            "Finalizar confronto": lambda: finalizar_confronto(sistema, ARQUIVO_JSON, usuario_logado),
         }
 
-        escolha = st.radio("Selecione uma ação:", list(opcoes_staff.keys()), key="menu_staff")
+        escolha = st.radio("Selecione uma a\u00e7\u00e3o:", list(opcoes_staff.keys()), key=f"staff_menu_{usuario_logado}")
 
-        # Espaço para empurrar o botão "Sair" pro rodapé
         for _ in range(20):
             st.write("")
 
-        if st.button("🚪 Sair"):
+        if st.button("\ud83d\udeaa Sair"):
             st.session_state.clear()
             st.rerun()
 
-
-    # === PAINEL CENTRAL ===
-    st.title("🎮 Painel do Staff")
+    st.title("\ud83c\udfae Painel do Staff")
     st.subheader(f"Torneio ativo: {torneio if torneio else 'Nenhum'}")
 
     if torneio and confronto_atual:
@@ -47,7 +44,7 @@ def modo_staff(sistema, ARQUIVO_JSON, usuario_logado):
         horario = confronto.get("horario", "?")
         local = confronto.get("local", "?")
 
-        st.markdown(f"### 🟧 Confronto ativo: **{confronto_atual}**  —  {time1} vs {time2} às {horario} no {local}")
+        st.markdown(f"### \ud83d\udfe7 Confronto ativo: **{confronto_atual}**  \u2014  {time1} vs {time2} \u00e0s {horario} no {local}")
 
         col1, col2 = st.columns(2)
 
@@ -58,45 +55,59 @@ def modo_staff(sistema, ARQUIVO_JSON, usuario_logado):
                 segundos = tempo_decorrido % 60
                 st.markdown(f"""
                     <div style='background-color:#fdd835;padding:10px;border-radius:10px;width:fit-content;'>
-                    ⏱️ <strong>Tempo atual:</strong> {minutos:02d}:{segundos:02d}
+                    \u23f1\ufe0f <strong>Tempo atual:</strong> {minutos:02d}:{segundos:02d}
                     </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown("""
                     <div style='background-color:#fdd835;padding:10px;border-radius:10px;width:fit-content;'>
-                    ⏱️ <strong>Tempo:</strong> Não iniciado
+                    \u23f1\ufe0f <strong>Tempo:</strong> N\u00e3o iniciado
                     </div>
                 """, unsafe_allow_html=True)
 
         with col2:
             seq = confronto.get("sequencia")
             idx = confronto.get("indice_sequencia", 0)
-            if seq:
-                letra_atual = seq[idx] if idx < len(seq) else "Fim"
-            else:
-                letra_atual = "?"
+            letra_atual = seq[idx] if seq and idx < len(seq) else "Fim" if seq else "?"
 
             st.markdown(f"""
                 <div style='background-color:#3f51b5;color:white;padding:10px;border-radius:10px;width:fit-content;'>
-                🔁 <strong>Sequência atual:</strong> {letra_atual}
+                \ud83d\udd01 <strong>Sequ\u00eancia atual:</strong> {letra_atual}
                 </div>
             """, unsafe_allow_html=True)
-
-
 
     else:
         st.subheader("Confronto ativo: Nenhum")
 
-    # === EXECUTA A FUNÇÃO SELECIONADA ===
     st.divider()
     if escolha:
-        opcoes_staff[escolha](sistema)
+        opcoes_staff[escolha]()
+
+def escolher_confronto(sistema, ARQUIVO_JSON, usuario_logado):
+    torneio = sistema.get("torneio_ativo")
+    if not torneio:
+        st.warning("Nenhum torneio ativo.")
+        return
+
+    confrontos = sistema["torneio"][torneio].get("confrontos", {})
+    if not confrontos:
+        st.info("Nenhum confronto cadastrado.")
+        return
+
+    opcoes = {
+        num: f"{num}: {dados['time1']} vs {dados['time2']} \u00e0s {dados['horario']} no {dados['local']}"
+        for num, dados in confrontos.items()
+    }
+    escolha = st.selectbox("Escolha o confronto:", list(opcoes.keys()), format_func=lambda x: opcoes[x])
+
+    if st.button("\u2705 Confirmar confronto"):
+        sistema["staffs_confrontos"][usuario_logado] = escolha
+        salvar_sistema(sistema, ARQUIVO_JSON)
+        st.success(f"Confronto {escolha} ativo para {usuario_logado}!")
 
 
 
-
-def escolher_confronto(sistema):
-
+def escolher_confronto(sistema, usuario_logado, ARQUIVO_JSON):
     torneio_atual = sistema.get("torneio_ativo")
 
     if not torneio_atual or torneio_atual not in sistema["torneio"]:
@@ -117,31 +128,33 @@ def escolher_confronto(sistema):
     jogo_marcar = st.selectbox("📋 Escolha o confronto:", options=list(opcoes.keys()), format_func=lambda x: opcoes[x])
 
     if st.button("✅ Marcar confronto como ativo"):
-        sistema["confronto_ativo"] = jogo_marcar
+        if "staffs_confrontos" not in sistema:
+            sistema["staffs_confrontos"] = {}
+        sistema["staffs_confrontos"][usuario_logado] = jogo_marcar
+        salvar_sistema(sistema, ARQUIVO_JSON)
+
         dados = confrontos[jogo_marcar]
         st.success(f"{jogo_marcar} marcado com sucesso!")
         st.markdown(f"**Confronto ativo:** {dados['time1']} 🆚 {dados['time2']} às {dados['horario']} no {dados['local']}")
 
-def verificar_times_jogadores(sistema):
+def verificar_times_jogadores(sistema, usuario_logado):
     torneio_atual = sistema.get("torneio_ativo")
-    jogo_atual = sistema.get("confronto_ativo")
+    confronto_id = sistema.get("staffs_confrontos", {}).get(usuario_logado)
 
-    if not torneio_atual or not jogo_atual:
+    if not torneio_atual or not confronto_id:
         st.warning("⚠️ Torneio ou confronto não foi selecionado.")
         return
 
     confronto = sistema["torneio"][torneio_atual]["confrontos"]
-
-    if jogo_atual not in confronto:
+    if confronto_id not in confronto:
         st.error("❌ Confronto não encontrado.")
         return
 
-    time1 = confronto[jogo_atual]["time1"]
-    time2 = confronto[jogo_atual]["time2"]
+    time1 = confronto[confronto_id]["time1"]
+    time2 = confronto[confronto_id]["time2"]
     times = sistema["torneio"][torneio_atual]["times"]
 
     col1, col2 = st.columns(2)
-
     for i, nome_time in enumerate((time1, time2)):
         if nome_time not in times:
             st.error(f"❌ Time '{nome_time}' não encontrado.")
@@ -160,17 +173,21 @@ def verificar_times_jogadores(sistema):
             else:
                 st.warning("⚠️ Nenhum jogador cadastrado nesse time ainda.")
 
-def definir_sequencia(sistema, ARQUIVO_JSON):
+def definir_sequencia(sistema, ARQUIVO_JSON, usuario_logado):
     from util import salvar_sistema
 
     torneio_atual = sistema.get("torneio_ativo")
-    jogo_atual = sistema.get("confronto_ativo")
+    confronto_ativo_staff = sistema.get("staffs_confrontos", {}).get(usuario_logado)
 
-    if not torneio_atual or not jogo_atual:
+    if not torneio_atual or not confronto_ativo_staff:
         st.warning("⚠️ Torneio ou confronto não foi selecionado.")
         return
 
-    confronto = sistema["torneio"][torneio_atual]["confrontos"][jogo_atual]
+    confronto = sistema["torneio"][torneio_atual]["confrontos"].get(confronto_ativo_staff)
+    if not confronto:
+        st.error("❌ Confronto não encontrado.")
+        return
+
     if confronto.get("finalizado"):
         st.error("🚫 Esse confronto já foi finalizado. Não é possível definir sequência.")
         return
@@ -181,7 +198,7 @@ def definir_sequencia(sistema, ARQUIVO_JSON):
         if escolha == "M":
             sequencia = ["M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F"]
         else:
-            sequencia = ["F","M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M"]
+            sequencia = ["F", "M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M", "M", "F", "F", "M"]
 
         confronto["sequencia"] = sequencia
         confronto["tipo_sequencia"] = escolha
@@ -193,9 +210,9 @@ def definir_sequencia(sistema, ARQUIVO_JSON):
         st.markdown("🔁 Sequência:")
         st.markdown(" → ".join(sequencia))
 
-def registrar_ponto(sistema, ARQUIVO_JSON):
+def registrar_ponto(sistema, ARQUIVO_JSON, usuario_logado):
     torneio_atual = sistema.get("torneio_ativo")
-    jogo_atual = sistema.get("confronto_ativo")
+    jogo_atual = sistema["staffs"][usuario_logado].get("confronto_ativo")
 
     if not torneio_atual or not jogo_atual:
         st.warning("⚠️ Torneio ou confronto não selecionado.")
@@ -239,11 +256,9 @@ def registrar_ponto(sistema, ARQUIVO_JSON):
         st.success(f"🎉 Gol do {time_nome}! {jogador_gol} marcou com assistência de {jogador_assis}.")
         st.rerun()
 
-def remover_ponto(sistema, ARQUIVO_JSON):
-    from util import salvar_sistema
-
+def remover_ponto(sistema, ARQUIVO_JSON, usuario_logado):
     torneio_atual = sistema.get("torneio_ativo")
-    jogo_atual = sistema.get("confronto_ativo")
+    jogo_atual = sistema["staffs"][usuario_logado].get("confronto_ativo")
 
     if not torneio_atual or not jogo_atual:
         st.warning("⚠️ Torneio ou confronto não selecionado.")
@@ -309,9 +324,10 @@ def remover_ponto(sistema, ARQUIVO_JSON):
         else:
             st.info("ℹ️ Nenhuma jogada restante no histórico.")
 
-def iniciar_tempo(sistema, ARQUIVO_JSON):
+def iniciar_tempo(sistema, ARQUIVO_JSON, usuario_logado):
     torneio_atual = sistema.get("torneio_ativo")
-    jogo_atual = sistema.get("confronto_ativo")
+    chave_staff = f"confronto_ativo_{usuario_logado}"
+    jogo_atual = sistema.get(chave_staff)
 
     if not torneio_atual or not jogo_atual:
         st.warning("⚠️ Torneio ou confronto não selecionado.")
@@ -332,7 +348,7 @@ def iniciar_tempo(sistema, ARQUIVO_JSON):
             confronto["tempo_inicio"] = tempo_atual
             salvar_sistema(sistema, ARQUIVO_JSON)
             st.success("🕒 Tempo iniciado com sucesso!")
-            st.rerun()  # Atualiza a tela após iniciar
+            st.rerun()
     else:
         tempo_inicio = confronto["tempo_inicio"]
         tempo_decorrido = int(time.time() - tempo_inicio)
@@ -345,14 +361,13 @@ def iniciar_tempo(sistema, ARQUIVO_JSON):
             </div>
         """, unsafe_allow_html=True)
 
-        # Atualiza a cada segundo
         time.sleep(1)
         st.rerun()
 
-
-def finalizar_confronto(sistema, ARQUIVO_JSON):
+def finalizar_confronto(sistema, ARQUIVO_JSON, usuario_logado):
     torneio = sistema.get("torneio_ativo")
-    confronto_id = sistema.get("confronto_ativo")
+    chave_staff = f"confronto_ativo_{usuario_logado}"
+    confronto_id = sistema.get(chave_staff)
 
     if not torneio or not confronto_id:
         st.warning("⚠️ Torneio ou confronto não selecionado.")
@@ -368,7 +383,6 @@ def finalizar_confronto(sistema, ARQUIVO_JSON):
     time2 = confronto["time2"]
     times = sistema["torneio"][torneio]["times"]
 
-    # 🧮 Calcular vencedor e placar
     vencedor = calcular_vencedor_por_gols(sistema, confronto)
 
     placar1 = confronto.get("placar1", 0)
@@ -384,9 +398,8 @@ def finalizar_confronto(sistema, ARQUIVO_JSON):
 
     if st.button("✅ Confirmar e finalizar confronto"):
         confronto["finalizado"] = True
-        confronto["vencedor"] = vencedor  # salva quem venceu, para ranking depois
-        
-        # 💥 Limpa o tempo ao finalizar
+        confronto["vencedor"] = vencedor
+
         if "tempo_inicio" in confronto:
             del confronto["tempo_inicio"]
 
@@ -410,4 +423,5 @@ def calcular_vencedor_por_gols(sistema, confronto):
         return time1
     elif gols_time2 > gols_time1:
         return time2
-    return None  # empate
+    return None
+

@@ -3,6 +3,17 @@ import streamlit as st
 def modo_jogador(sistema):
     st.title("🎮 Modo Jogador")
 
+    # === SIDEBAR COM BOTÃO DE SAIR ===
+    with st.sidebar:
+        st.markdown("## 👤 Modo Jogador")
+
+        for _ in range(20):
+            st.write("")
+
+        if st.button("🚪 Sair"):
+            st.session_state.clear()
+            st.rerun()
+
     if not sistema["torneio"]:
         st.warning("⚠️ Nenhum torneio foi criado ainda.")
         return
