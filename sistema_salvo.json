@@ -1,0 +1,340 @@
+{
+    "torneio": {
+        "CANA 2": {
+            "times": {
+                "TEEN LOVERS": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "ADEMIR": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ALLAN": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "DAN": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "DOUG": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GUS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MATHEUS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MUH": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "PRIMO (FELIPE": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "VINY SHOCK": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ANA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ANINHA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "EMILY": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GABS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "THAIS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                },
+                "TEEN GOLD": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "ANDREY": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "BREGGE": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "BRUNINHO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "CAMARGO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "RIAN": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "SAMUEL": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "SUPER SHOCK": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "FERNANDA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GEO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GIOVANNA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GODOY": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LIVIA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LUA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MOTA (GABI)": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                },
+                "NGF RED": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "BRUNO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LEONARDO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MAIELO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "NEGRAO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "PAULA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "TALI": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "TAIS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                },
+                "ADVEN7US": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "ALLAN BRENO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ANTONIO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "AUGUSTO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "FELIPE BERA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GUILHERME": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "JOSE PEDRO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MATEUS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MARCELO M": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ADRIANA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "INDIANARA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "JULIA R": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LIGGIA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "STEPHANY": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "VITORIA R": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                },
+                "NGF GRAY": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "ANDRE": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "CHINA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "DENIS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "IAN": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LUCAS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "LICA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ROSALY": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "SAMANTHA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                },
+                "BRASA": {
+                    "pontos": 0,
+                    "jogadores": {
+                        "DOUG": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "DU FAIM": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "GEREZ": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "HADDAD": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "OSMAR": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "RODS": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "JOAQUIM": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "CAITLIN": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "CHICO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "ISA BIANCO": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "JHU": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "JORDANA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MARI": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "MARISE": {
+                            "gols": 0,
+                            "assistencias": 0
+                        },
+                        "SAMARA": {
+                            "gols": 0,
+                            "assistencias": 0
+                        }
+                    }
+                }
+            },
+            "confrontos": {
+                "JOGO 1": {
+                    "time1": "ADVEN7US",
+                    "time2": "BRASA",
+                    "horario": "9h",
+                    "local": "campo 1"
+                }
+            }
+        },
+        "CANA 3": {
+            "times": {},
+            "confrontos": {}
+        }
+    },
+    "torneio_ativo": "CANA 2",
+    "confronto_ativo": null
+}
