@@ -158,7 +158,7 @@
                     }
                 },
                 "ADVEN7US": {
-                    "pontos": 0,
+                    "pontos": 1,
                     "jogadores": {
                         "ALLAN BRENO": {
                             "gols": 0,
@@ -177,7 +177,7 @@
                             "assistencias": 0
                         },
                         "GUILHERME": {
-                            "gols": 0,
+                            "gols": 1,
                             "assistencias": 0
                         },
                         "JOSE PEDRO": {
@@ -194,7 +194,7 @@
                         },
                         "ADRIANA": {
                             "gols": 0,
-                            "assistencias": 0
+                            "assistencias": 1
                         },
                         "INDIANARA": {
                             "gols": 0,
@@ -323,10 +323,86 @@
             },
             "confrontos": {
                 "JOGO 1": {
-                    "time1": "ADVEN7US",
-                    "time2": "BRASA",
+                    "time1": "BRASA",
+                    "time2": "ADVEN7US",
                     "horario": "9h",
+                    "local": "campo 1",
+                    "sequencia": [
+                        "F",
+                        "M",
+                        "M",
+                        "F",
+                        "F",
+                        "M",
+                        "M",
+                        "F",
+                        "F",
+                        "M",
+                        "M",
+                        "F",
+                        "F",
+                        "M",
+                        "M",
+                        "F",
+                        "F",
+                        "M"
+                    ],
+                    "tipo_sequencia": "F",
+                    "indice_sequencia": 1,
+                    "placar1": 0,
+                    "placar2": 1,
+                    "finalizado": true,
+                    "vencedor": "ADVEN7US"
+                },
+                "JOGO 2": {
+                    "time1": "TEEN LOVERS",
+                    "time2": "TEEN GOLD",
+                    "horario": "10h",
+                    "local": "campo 1",
+                    "placar1": 0,
+                    "placar2": 0
+                },
+                "JOGO 3": {
+                    "time1": "TEEN LOVERS",
+                    "time2": "ADVEN7US",
+                    "horario": "11h",
                     "local": "campo 1"
+                },
+                "JOGO 4": {
+                    "time1": "NGF GRAY",
+                    "time2": "ADVEN7US",
+                    "horario": "12h",
+                    "local": "campo 1"
+                },
+                "JOGO 5": {
+                    "time1": "TEEN LOVERS",
+                    "time2": "NGF RED",
+                    "horario": "13h",
+                    "local": "campo 1"
+                },
+                "JOGO 6": {
+                    "time1": "NGF GRAY",
+                    "time2": "NGF RED",
+                    "horario": "9h",
+                    "local": "campo 2"
+                },
+                "JOGO 7": {
+                    "time1": "BRASA",
+                    "time2": "NGF RED",
+                    "horario": "10h",
+                    "local": "campo 2"
+                },
+                "JOGO 8": {
+                    "time1": "NGF GRAY",
+                    "time2": "TEEN GOLD",
+                    "horario": "11h",
+                    "local": "campo 2"
+                },
+                "JOGO 9": {
+                    "time1": "BRASA",
+                    "time2": "TEEN GOLD",
+                    "horario": "12h",
+                    "local": "campo 2"
                 }
             }
         },
@@ -336,5 +412,5 @@
         }
     },
     "torneio_ativo": "CANA 2",
-    "confronto_ativo": null
+    "confronto_ativo": "JOGO 2"
 }

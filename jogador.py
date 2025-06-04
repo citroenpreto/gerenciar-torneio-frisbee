@@ -11,7 +11,6 @@ def modo_jogador(sistema):
     torneio_escolhido = st.selectbox("🎯 Selecione o torneio que deseja visualizar:", torneios_disponiveis)
 
     confrontos = sistema["torneio"][torneio_escolhido]["confrontos"]
-    times = sistema["torneio"][torneio_escolhido]["times"]
 
     if not confrontos:
         st.info("⚠️ Nenhum confronto cadastrado para esse torneio.")
@@ -22,9 +21,21 @@ def modo_jogador(sistema):
     for numero_jogo, dados in confrontos.items():
         time1 = dados["time1"]
         time2 = dados["time2"]
-        placar1 = times[time1]["pontos"] if time1 in times else 0
-        placar2 = times[time2]["pontos"] if time2 in times else 0
+        horario = dados["horario"]
+        local = dados["local"]
 
-        st.markdown(f"**{numero_jogo}** — {time1} {placar1} 🆚 {placar2} {time2}")
+        if dados.get("finalizado"):
+            placar1 = dados.get("placar1", 0)
+            placar2 = dados.get("placar2", 0)
+            vencedor = dados.get("vencedor")
+            resultado = f"🏁 FINALIZADO — {time1} {placar1} 🆚 {placar2} {time2}"
+            if vencedor:
+                resultado += f" 🏆 Vencedor: **{vencedor}**"
+            else:
+                resultado += " 🤝 Empate"
+        else:
+            resultado = f"{time1} 🆚 {time2}"
+
+        st.markdown(f"**{numero_jogo}** — {resultado} ⏰ {horario} 📍 {local}")
 
     st.info("🔁 Atualize a página para ver os placares mais recentes.")

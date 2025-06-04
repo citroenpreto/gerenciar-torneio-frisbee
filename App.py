@@ -96,4 +96,5 @@ else:
                     st.success("Jogador registrado com sucesso!")
 
         elif opcao == "Sair":
-            st.info("Saindo do sistema... Feche a aba se desejar encerrar.")
+            st.session_state.clear()
+            st.success("Você saiu com sucesso. Atualize a página para entrar novamente.")

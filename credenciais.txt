@@ -1,10 +1,3 @@
 admin:Caio:161ebd7d45089b3446ee4e0d86dbcf92
 admin:Stephany:8b96ac57142d03a54fcbdfc78b6a73bf
 admin:Natalia:369732cf485f7849ea84733455a3a0b8
-admin:caio:81dc9bdb52d04dc20036dbd8313ed055
-
-staff:login:senha:nome_do_torneio
-
-
-jogador:gui:1fd054a0531a34cd2126fe3759da324b
-capitão:teste:698dc19d489c4e4db73e28a713eab07b:CANA 2

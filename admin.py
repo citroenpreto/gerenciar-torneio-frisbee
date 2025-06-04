@@ -203,19 +203,28 @@ def modo_administrador(sistema, ARQUIVO_JSON, usuario_logado):
             time = st.selectbox("🏷️ Time que vai perder o ponto:", list(times.keys()))
 
             if time:
-                jogadores_disponiveis = list(times[time]["jogadores"].keys())
-                jogador_gol = st.selectbox("❌ Jogador que vai perder o gol:", jogadores_disponiveis)
-                jogador_assist = st.selectbox("❌ Jogador que vai perder a assistência:", jogadores_disponiveis)
+                jogadores_estat = times[time]["jogadores"]
+
+                jogadores_com_gol = [j for j, stats in jogadores_estat.items() if stats["gols"] > 0]
+                jogadores_com_assist = [j for j, stats in jogadores_estat.items() if stats["assistencias"] > 0]
+
+                if not jogadores_com_gol and not jogadores_com_assist:
+                    st.warning("⚠️ Nenhum jogador com gols ou assistências para remover.")
+                    return
+
+                jogador_gol = st.selectbox("❌ Jogador que vai perder o gol:", jogadores_com_gol) if jogadores_com_gol else None
+                jogador_assist = st.selectbox("❌ Jogador que vai perder a assistência:", jogadores_com_assist) if jogadores_com_assist else None
 
                 if st.button("Remover ponto"):
                     if times[time]["pontos"] > 0:
                         times[time]["pontos"] -= 1
-                    if times[time]["jogadores"][jogador_gol]["gols"] > 0:
-                        times[time]["jogadores"][jogador_gol]["gols"] -= 1
-                    if times[time]["jogadores"][jogador_assist]["assistencias"] > 0:
-                        times[time]["jogadores"][jogador_assist]["assistencias"] -= 1
+                    if jogador_gol and jogadores_estat[jogador_gol]["gols"] > 0:
+                        jogadores_estat[jogador_gol]["gols"] -= 1
+                    if jogador_assist and jogadores_estat[jogador_assist]["assistencias"] > 0:
+                        jogadores_estat[jogador_assist]["assistencias"] -= 1
                     salvar_sistema(sistema, ARQUIVO_JSON)
-                    st.success(f"Ponto removido do {time}.")
+                    st.success(f"✅ Ponto removido do {time}.")
+
 
     elif escolha == "Ver estatísticas do jogo":
         torneio_atual = sistema.get("torneio_ativo")
@@ -288,9 +297,24 @@ def modo_administrador(sistema, ARQUIVO_JSON, usuario_logado):
             else:
                 jogo_sel = st.selectbox("Escolha o confronto para remover:", list(confrontos.keys()))
                 if st.button("Remover confronto"):
+                    confronto = confrontos[jogo_sel]
+                    time1 = confronto.get("time1")
+                    time2 = confronto.get("time2")
+                    times = sistema["torneio"][torneio_atual]["times"]
+
+                    # 🧼 Zerar estatísticas dos jogadores e pontos dos times
+                    for time_nome in [time1, time2]:
+                        if time_nome in times:
+                            time = times[time_nome]
+                            time["pontos"] = 0
+                            for jogador in time["jogadores"].values():
+                                jogador["gols"] = 0
+                                jogador["assistencias"] = 0
+
+                    # ❌ Remover o confronto
                     del confrontos[jogo_sel]
                     salvar_sistema(sistema, ARQUIVO_JSON)
-                    st.success(f"🗑️ Confronto '{jogo_sel}' removido com sucesso!")
+                    st.success(f"🗑️ Confronto '{jogo_sel}' removido com sucesso, incluindo os dados estatísticos.")
 
     elif escolha == "Mostrar confrontos":
         torneio_atual = sistema.get("torneio_ativo")
@@ -303,9 +327,24 @@ def modo_administrador(sistema, ARQUIVO_JSON, usuario_logado):
             else:
                 st.subheader("📋 Confrontos cadastrados:")
                 for numero_jogo, dados in confrontos.items():
-                    st.markdown(
-                        f"📅 **{numero_jogo}**: {dados['time1']} 🆚 {dados['time2']} — ⏰ {dados['horario']} 📍 {dados['local']}"
-                    )
+                    time1 = dados["time1"]
+                    time2 = dados["time2"]
+                    horario = dados["horario"]
+                    local = dados["local"]
+
+                    if dados.get("finalizado"):
+                        placar1 = dados.get("placar1", 0)
+                        placar2 = dados.get("placar2", 0)
+                        vencedor = dados.get("vencedor")
+                        resultado = f"🏁 FINALIZADO — {time1} {placar1} 🆚 {placar2} {time2}"
+                        if vencedor:
+                            resultado += f" 🏆 Vencedor: **{vencedor}**"
+                        else:
+                            resultado += " 🤝 Empate"
+                    else:
+                        resultado = f"{time1} 🆚 {time2}"
+
+                    st.markdown(f"📅 **{numero_jogo}** — {resultado}  ⏰ {horario} 📍 {local}")
 
     elif escolha == "Registrar novo staff":
         login = st.text_input("Login do staff:")
