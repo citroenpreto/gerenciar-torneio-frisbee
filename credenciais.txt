@@ -1,3 +1,4 @@
 admin:Caio:161ebd7d45089b3446ee4e0d86dbcf92
 admin:Stephany:8b96ac57142d03a54fcbdfc78b6a73bf
 admin:Natalia:369732cf485f7849ea84733455a3a0b8
+jogador:joga:ddcd62e16a428c8e45a71760410e1730
